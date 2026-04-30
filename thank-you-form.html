@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Форма со страницей благодарности</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6f7fb;
+      color: #1f1f2e;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .form-card {
+      width: 100%;
+      max-width: 430px;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: 0 16px 40px rgba(31, 31, 46, 0.12);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0 0 24px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #66667a;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      border: 1px solid #d8d8e8;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #6b46ff;
+      box-shadow: 0 0 0 3px rgba(107, 70, 255, 0.14);
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 18px;
+      background: #6b46ff;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #5635df;
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f0ecff;
+      color: #2e245f;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="form-card">
+      <h1>Заявка на аудит сайта</h1>
+
+      <p>
+        Пример формы, после успешной отправки которой открывается отдельная страница благодарности.
+      </p>
+
+      <form action="thank-you.html" method="GET">
+        <div class="form-group">
+          <label for="name">Ваше имя</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Например, Анна"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Телефон</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="+7 999 123-45-67"
+            required
+          />
+        </div>
+
+        <button type="submit">
+          Отправить заявку
+        </button>
+      </form>
+
+      <div class="note">
+        После отправки формы браузер перейдёт на страницу <b>thank-you.html</b>.
+      </div>
+    </section>
+  </main>
+</body>
+</html>
