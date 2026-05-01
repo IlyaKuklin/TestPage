@@ -209,9 +209,7 @@
           clonedResponse.json().then(function (data) {
             if (data && data.success === true) {
               window.dataLayer.push({
-                event: 'ajax_add_to_cart_success',
-                product_id: 'course-web-analytics',
-                product_name: 'Курс по веб-аналитике'
+                event: 'ajax_add_to_cart_success'
               });
 
               console.log('dataLayer push: ajax_add_to_cart_success');

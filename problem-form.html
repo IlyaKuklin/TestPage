@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Проблемная форма</title>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f7fb;
+            color: #1f1f2e;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 460px;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 16px 40px rgba(31, 31, 46, 0.12);
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: 26px;
+            line-height: 1.2;
+        }
+
+        p {
+            margin: 0 0 24px;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #66667a;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 14px;
+            border: 1px solid #d8d8e8;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #6b46ff;
+            box-shadow: 0 0 0 3px rgba(107, 70, 255, 0.14);
+        }
+
+        button {
+            width: 100%;
+            border: 0;
+            border-radius: 12px;
+            padding: 14px 18px;
+            background: #6b46ff;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #5635df;
+        }
+
+        .success-message {
+            display: none;
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: #edf8ef;
+            color: #226b35;
+            font-size: 14px;
+            line-height: 1.45;
+            font-weight: 700;
+        }
+
+        .note {
+            margin-top: 18px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #f0ecff;
+            color: #2e245f;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        code {
+            background: rgba(107, 70, 255, 0.12);
+            padding: 2px 5px;
+            border-radius: 5px;
+        }
+
+        .code-block {
+            margin-top: 22px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #d8d8e8;
+            background: #1f1f2e;
+        }
+
+        .code-title {
+            padding: 12px 16px;
+            background: #2c2c40;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        pre {
+            margin: 0;
+            padding: 16px;
+            overflow-x: auto;
+        }
+
+        pre code {
+            background: transparent;
+            color: #f4f4ff;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: pre;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page">
+        <section class="card">
+            <h1>Проблемная форма</h1>
+
+            <p>
+                Эту форму можно “отправить” даже с пустыми полями.
+                Сообщение об успехе появляется всегда.
+            </p>
+
+            <form id="problemForm">
+                <div class="form-group">
+                    <label for="name">Ваше имя</label>
+                    <input id="name" name="name" type="text" placeholder="Например, Анна">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input id="phone" name="phone" type="tel" placeholder="+7 999 123-45-67">
+                </div>
+
+                <button id="sendButton" type="button">
+                    Отправить заявку
+                </button>
+            </form>
+
+            <div id="successMessage" class="success-message">
+                Спасибо! Заявка успешно отправлена.
+            </div>
+
+            <div class="note">
+                Проблема: сообщение об успехе появляется всегда, даже если поля пустые.
+                Поэтому отслеживать только видимость этого сообщения нельзя.
+            </div>
+
+            <div class="code-block">
+                <div class="code-title">Код проверки формы и отправки события в dataLayer</div>
+
+                <pre><code>&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
+
+  (function () {
+    const form = document.querySelector('#problemForm');
+    const button = document.querySelector('#sendButton');
+    const nameInput = document.querySelector('#name');
+    const phoneInput = document.querySelector('#phone');
+
+    if (!form || !button || !nameInput || !phoneInput) {
+      console.warn('Problem form elements not found');
+      return;
+    }
+
+    button.addEventListener('click', function () {
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+
+      if (!name || !phone) {
+        console.log('Форма не засчитана: не все поля заполнены');
+        return;
+      }
+
+      window.dataLayer.push({
+        event: 'problem_form_valid_success',
+        form_name: 'problem_form',
+        fields_filled: true
+      });
+
+      console.log('dataLayer push: problem_form_valid_success');
+    });
+  })();
+&lt;/script&gt;</code></pre>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        const sendButton = document.querySelector('#sendButton');
+        const successMessage = document.querySelector('#successMessage');
+
+        sendButton.addEventListener('click', function () {
+            successMessage.style.display = 'block';
+
+            console.log('Сообщение об успехе показано, даже если поля пустые');
+        });
+    </script>
+</body>
+
+</html>
