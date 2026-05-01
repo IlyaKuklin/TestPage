@@ -2,198 +2,237 @@
 <html lang="ru">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Добавление товара в корзину без submit</title>
+    <title>Добавление товара в корзину без submit</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f6f7fb;
-      color: #1f1f2e;
-    }
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f7fb;
+            color: #1f1f2e;
+        }
 
-    .page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-    }
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
 
-    .card {
-      width: 100%;
-      max-width: 460px;
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 32px;
-      box-shadow: 0 16px 40px rgba(31, 31, 46, 0.12);
-    }
+        .card {
+            width: 100%;
+            max-width: 460px;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 16px 40px rgba(31, 31, 46, 0.12);
+        }
 
-    .cart {
-      margin-bottom: 24px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: #f0ecff;
-      color: #2e245f;
-      font-size: 14px;
-      font-weight: 700;
-    }
+        .cart {
+            margin-bottom: 24px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #f0ecff;
+            color: #2e245f;
+            font-size: 14px;
+            font-weight: 700;
+        }
 
-    h1 {
-      margin: 0 0 12px;
-      font-size: 26px;
-      line-height: 1.2;
-    }
+        h1 {
+            margin: 0 0 12px;
+            font-size: 26px;
+            line-height: 1.2;
+        }
 
-    .price {
-      margin: 0 0 22px;
-      font-size: 22px;
-      font-weight: 700;
-      color: #6b46ff;
-    }
+        .price {
+            margin: 0 0 22px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #6b46ff;
+        }
 
-    .form-group {
-      margin-bottom: 18px;
-    }
+        .form-group {
+            margin-bottom: 18px;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-      font-weight: 700;
-    }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+        }
 
-    select,
-    input {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 13px 14px;
-      border: 1px solid #d8d8e8;
-      border-radius: 12px;
-      font-size: 15px;
-      outline: none;
-      background: #ffffff;
-    }
+        select,
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 14px;
+            border: 1px solid #d8d8e8;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            background: #ffffff;
+        }
 
-    select:focus,
-    input:focus {
-      border-color: #6b46ff;
-      box-shadow: 0 0 0 3px rgba(107, 70, 255, 0.14);
-    }
+        select:focus,
+        input:focus {
+            border-color: #6b46ff;
+            box-shadow: 0 0 0 3px rgba(107, 70, 255, 0.14);
+        }
 
-    button {
-      width: 100%;
-      border: 0;
-      border-radius: 12px;
-      padding: 14px 18px;
-      background: #6b46ff;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+        button {
+            width: 100%;
+            border: 0;
+            border-radius: 12px;
+            padding: 14px 18px;
+            background: #6b46ff;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
 
-    button:hover {
-      background: #5635df;
-    }
+        button:hover {
+            background: #5635df;
+        }
 
-    button:disabled {
-      cursor: default;
-      opacity: 0.7;
-    }
+        button:disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
 
-    .note {
-      margin-top: 18px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: #f0ecff;
-      color: #2e245f;
-      font-size: 13px;
-      line-height: 1.45;
-    }
+        .note {
+            margin-top: 18px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #f0ecff;
+            color: #2e245f;
+            font-size: 13px;
+            line-height: 1.45;
+        }
 
-    code {
-      background: rgba(107, 70, 255, 0.12);
-      padding: 2px 5px;
-      border-radius: 5px;
-    }
-  </style>
+        code {
+            background: rgba(107, 70, 255, 0.12);
+            padding: 2px 5px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
-  <main class="page">
-    <section class="card">
-      <div class="cart">
-        Товаров в корзине: <span id="cartCount">0</span>
-      </div>
+    <main class="page">
+        <section class="card">
+            <div class="cart">
+                Товаров в корзине: <span id="cartCount">0</span>
+            </div>
 
-      <h1>Курс по веб-аналитике</h1>
-      <p class="price">12 000 ₽</p>
+            <h1>Курс по веб-аналитике</h1>
+            <p class="price">12 000 ₽</p>
 
-      <form id="cartForm">
-        <div class="form-group">
-          <label for="tariff">Тариф</label>
-          <select id="tariff" name="tariff">
-            <option value="basic">Базовый</option>
-            <option value="pro">Продвинутый</option>
-          </select>
-        </div>
+            <form id="cartForm">
+                <div class="form-group">
+                    <label for="tariff">Тариф</label>
+                    <select id="tariff" name="tariff">
+                        <option value="basic">Базовый</option>
+                        <option value="pro">Продвинутый</option>
+                    </select>
+                </div>
 
-        <div class="form-group">
-          <label for="quantity">Количество</label>
-          <input id="quantity" name="quantity" type="number" min="1" value="1">
-        </div>
+                <div class="form-group">
+                    <label for="quantity">Количество</label>
+                    <input id="quantity" name="quantity" type="number" min="1" value="1">
+                </div>
 
-        <button id="addToCartButton" type="button">
-          Добавить в корзину
-        </button>
-      </form>
+                <button id="addToCartButton" type="button">
+                    Добавить в корзину
+                </button>
+            </form>
 
-      <div class="note">
-        Здесь есть HTML-элемент <code>&lt;form&gt;</code>, но кнопка имеет
-        <code>type="button"</code>, поэтому событие <code>submit</code> не происходит.
-        Товар добавляется через AJAX-запрос.
-      </div>
-    </section>
-  </main>
+            <div class="note">
+                Здесь есть HTML-элемент <code>&lt;form&gt;</code>, но кнопка имеет
+                <code>type="button"</code>, поэтому событие <code>submit</code> не происходит.
+                Товар добавляется через AJAX-запрос.
+            </div>
 
-  <script>
-    const addToCartButton = document.querySelector('#addToCartButton');
-    const cartCount = document.querySelector('#cartCount');
-    const tariff = document.querySelector('#tariff');
-    const quantity = document.querySelector('#quantity');
 
-    addToCartButton.addEventListener('click', function () {
-      addToCartButton.disabled = true;
-      addToCartButton.textContent = 'Добавляем...';
+            <div class="code-block">
+                <div class="code-title">Код перехвата AJAX-запроса</div>
 
-      const url = 'cart-response.json'
-        + '?product_id=course-web-analytics'
-        + '&tariff=' + encodeURIComponent(tariff.value)
-        + '&quantity=' + encodeURIComponent(quantity.value);
+                <pre><code>&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
 
-      fetch(url)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          if (data.success === true) {
-            cartCount.textContent = Number(cartCount.textContent) + Number(quantity.value);
-            console.log('Товар успешно добавлен в корзину');
-          }
-        })
-        .catch(function (error) {
-          console.error('Ошибка добавления товара:', error);
-        })
-        .finally(function () {
-          addToCartButton.disabled = false;
-          addToCartButton.textContent = 'Добавить в корзину';
+  (function () {
+    const originalFetch = window.fetch;
+
+    window.fetch = function () {
+      const fetchArguments = arguments;
+      const requestUrl = String(fetchArguments[0]);
+
+      return originalFetch.apply(this, fetchArguments).then(function (response) {
+        const clonedResponse = response.clone();
+
+        if (requestUrl.includes('cart-response.json') && response.ok) {
+          clonedResponse.json().then(function (data) {
+            if (data && data.success === true) {
+              window.dataLayer.push({
+                event: 'ajax_add_to_cart_success',
+                product_id: 'course-web-analytics',
+                product_name: 'Курс по веб-аналитике'
+              });
+
+              console.log('dataLayer push: ajax_add_to_cart_success');
+            }
+          });
+        }
+
+        return response;
+      });
+    };
+  })();
+&lt;/script&gt;</code></pre>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        const addToCartButton = document.querySelector('#addToCartButton');
+        const cartCount = document.querySelector('#cartCount');
+        const tariff = document.querySelector('#tariff');
+        const quantity = document.querySelector('#quantity');
+
+        addToCartButton.addEventListener('click', function () {
+            addToCartButton.disabled = true;
+            addToCartButton.textContent = 'Добавляем...';
+
+            const url = 'cart-response.json'
+                + '?product_id=course-web-analytics'
+                + '&tariff=' + encodeURIComponent(tariff.value)
+                + '&quantity=' + encodeURIComponent(quantity.value);
+
+            fetch(url)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data.success === true) {
+                        cartCount.textContent = Number(cartCount.textContent) + Number(quantity.value);
+                        console.log('Товар успешно добавлен в корзину');
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Ошибка добавления товара:', error);
+                })
+                .finally(function () {
+                    addToCartButton.disabled = false;
+                    addToCartButton.textContent = 'Добавить в корзину';
+                });
         });
-    });
-  </script>
+    </script>
 </body>
 
 </html>
