@@ -213,12 +213,8 @@
       }
 
       window.dataLayer.push({
-        event: 'problem_form_valid_success',
-        form_name: 'problem_form',
-        fields_filled: true
+        event: 'problem_form_valid_success'
       });
-
-      console.log('dataLayer push: problem_form_valid_success');
     });
   })();
 &lt;/script&gt;</code></pre>
@@ -235,9 +231,6 @@
             event.preventDefault();
 
             successMessage.style.display = 'block';
-
-            console.log('Событие submit произошло');
-            console.log('Сообщение об успехе показано, даже если поля пустые');
         });
     </script>
 </body>
