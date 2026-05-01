@@ -172,7 +172,7 @@
                     <input id="phone" name="phone" type="tel" placeholder="+7 999 123-45-67">
                 </div>
 
-                <button id="sendButton" type="button">
+                <button id="sendButton" type="submit">
                     Отправить заявку
                 </button>
             </form>
@@ -228,12 +228,15 @@
     </main>
 
     <script>
-        const sendButton = document.querySelector('#sendButton');
+        const problemForm = document.querySelector('#problemForm');
         const successMessage = document.querySelector('#successMessage');
 
-        sendButton.addEventListener('click', function () {
+        problemForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
             successMessage.style.display = 'block';
 
+            console.log('Событие submit произошло');
             console.log('Сообщение об успехе показано, даже если поля пустые');
         });
     </script>
