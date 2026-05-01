@@ -1,7 +1,9 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Интернет-магазин</title>
 
   <!-- Yandex.Metrika counter -->
@@ -29,87 +31,51 @@
     }
 
     .page {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 48px 24px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
     }
 
-    h1 {
-      margin: 0 0 16px;
-      font-size: 34px;
+    .card {
+      width: 100%;
+      max-width: 420px;
+      padding: 32px;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(31, 31, 46, 0.12);
+      text-align: center;
     }
 
     p {
-      margin: 0 0 28px;
-      font-size: 17px;
+      margin: 0 0 24px;
+      font-size: 20px;
       color: #66667a;
-      line-height: 1.5;
     }
 
-    .links {
-      display: grid;
-      gap: 16px;
-      max-width: 520px;
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 24px;
+      background: #6b46ff;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    .link-card {
-      display: block;
-      padding: 18px 20px;
-      border-radius: 14px;
-      background: #ffffff;
-      color: #1f1f2e;
-      text-decoration: none;
-      box-shadow: 0 10px 28px rgba(31, 31, 46, 0.1);
-      border: 1px solid #ececf6;
-    }
-
-    .link-card:hover {
-      border-color: #6b46ff;
-      box-shadow: 0 12px 32px rgba(107, 70, 255, 0.16);
-    }
-
-    .link-card strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 18px;
-    }
-
-    .link-card span {
-      font-size: 14px;
-      color: #66667a;
-      line-height: 1.4;
+    button:hover {
+      background: #5635df;
     }
   </style>
 </head>
 
 <body>
   <main class="page">
-    <h1>Тестовые страницы для веб-аналитики</h1>
-
-    <p>
-      На этой странице собраны примеры форм для демонстрации настройки макроцелей в Яндекс Метрике и Яндекс Tag Manager.
-    </p>
-
-    <div class="links">
-      <a class="link-card" href="classic-form.html">
-        <strong>Классическая форма с перезагрузкой страницы</strong>
-        <span>После отправки страница обновляется, данные передаются через GET-параметры.</span>
-      </a>
-
-      <a class="link-card" href="thank-you-form.html">
-        <strong>Форма со страницей благодарности</strong>
-        <span>После отправки пользователь переходит на отдельную страницу thank-you.html.</span>
-      </a>
-
-      <a class="link-card" href="ajax-form.html">
-        <strong>Форма без перезагрузки страницы</strong>
-        <span>Форма отправляется через JavaScript/AJAX, URL страницы не меняется.</span>
-      </a>
-
-      <a class="link-card" href="fake-form.html">
-        <strong>Псевдоформа без события submit</strong>
-        <span>Внешне похожа на форму, но в коде нет элемента form, поэтому submit не происходит.</span>
-      </a>
+    <div class="card">
+      <p>Текст</p>
+      <button id="btn">Кнопка</button>
     </div>
   </main>
 </body>
