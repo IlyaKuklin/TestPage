@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Форма внешнего сервиса — GetCourse</title>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+      m[i].l = 1 * new Date();
+      for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+      k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=108992298', 'ym');
+
+    ym(108992298, 'init', {
+      ssr: true,
+      webvisor: true,
+      clickmap: true,
+      ecommerce: "dataLayer",
+      referrer: document.referrer,
+      url: location.href,
+      accurateTrackBounce: true,
+      trackLinks: true
+    });
+  </script>
+
+  <noscript>
+    <div>
+      <img src="https://mc.yandex.ru/watch/108992298" style="position:absolute; left:-9999px;" alt="" />
+    </div>
+  </noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6f7fb;
+      color: #1f1f2e;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .lead {
+      margin: 0 0 28px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #66667a;
+    }
+
+    .form-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 16px 40px rgba(31, 31, 46, 0.12);
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f0ecff;
+      color: #2e245f;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 28px;
+      color: #6b46ff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <h1>Форма внешнего сервиса</h1>
+
+    <p class="lead">
+      Пример формы, которая подключается на страницу через внешний скрипт GetCourse.
+      Визуально форма находится на сайте, но её логика управляется сторонним сервисом.
+    </p>
+
+    <section class="form-card">
+      <script id="9d41dbd1e101ff5c5e3115b09b7e83c1b00cd19d" src="https://courses.digit-education.ru/pl/lite/widget/script?id=920205"></script>
+
+      <div class="note">
+        Это пример формы внешнего сервиса. Для отслеживания нужно проверить, видит ли ЯТМ отправку формы,
+        появляется ли событие submit, меняется ли DOM после успешной отправки и есть ли страница благодарности.
+      </div>
+    </section>
+
+    <a class="back-link" href="forms.html">← Вернуться к списку форм</a>
+  </main>
+</body>
+
+</html>
