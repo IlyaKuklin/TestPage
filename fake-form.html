@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Псевдоформа без события submit</title>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+      m[i].l = 1 * new Date();
+      for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+      k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=108992298', 'ym');
+
+    ym(108992298, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
+  </script>
+  <noscript>
+    <div><img src="https://mc.yandex.ru/watch/108992298" style="position:absolute; left:-9999px;" alt="" /></div>
+  </noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6f7fb;
+      color: #1f1f2e;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .form-card {
+      width: 100%;
+      max-width: 430px;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: 0 16px 40px rgba(31, 31, 46, 0.12);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0 0 24px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #66667a;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      border: 1px solid #d8d8e8;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #6b46ff;
+      box-shadow: 0 0 0 3px rgba(107, 70, 255, 0.14);
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 18px;
+      background: #6b46ff;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #5635df;
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .success-message {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #edf8ef;
+      color: #226b35;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .error-message {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #fff1f1;
+      color: #9d2525;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f0ecff;
+      color: #2e245f;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    code {
+      background: rgba(107, 70, 255, 0.12);
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="form-card">
+      <h1>Псевдоформа без submit</h1>
+
+      <p>
+        Внешне блок похож на форму, но в коде нет HTML-элемента <code>&lt;form&gt;</code>.
+      </p>
+
+      <div id="fakeForm">
+        <div class="field">
+          <label for="name">Ваше имя</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Например, Анна"
+          />
+        </div>
+
+        <div class="field">
+          <label for="phone">Телефон</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            placeholder="+7 999 123-45-67"
+          />
+        </div>
+
+        <button id="sendButton" type="button">
+          Отправить заявку
+        </button>
+      </div>
+
+      <div id="successMessage" class="success-message">
+        Спасибо! Заявка успешно отправлена.
+      </div>
+
+      <div id="errorMessage" class="error-message">
+        Заполните имя и телефон.
+      </div>
+
+      <div class="note">
+        Здесь нет события <code>submit</code>. Логика запускается по клику на кнопку.
+        Для отслеживания такой формы нужен другой способ: клик, видимость сообщения, кастомный скрипт или специальное событие.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const nameInput = document.querySelector('#name');
+    const phoneInput = document.querySelector('#phone');
+    const sendButton = document.querySelector('#sendButton');
+    const successMessage = document.querySelector('#successMessage');
+    const errorMessage = document.querySelector('#errorMessage');
+
+    sendButton.addEventListener('click', function () {
+      successMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
+
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+
+      if (!name || !phone) {
+        errorMessage.style.display = 'block';
+        console.log('Псевдоформа не отправлена: поля не заполнены');
+        return;
+      }
+
+      sendButton.disabled = true;
+      sendButton.textContent = 'Отправляем...';
+
+      setTimeout(function () {
+        sendButton.disabled = false;
+        sendButton.textContent = 'Отправить заявку';
+
+        nameInput.value = '';
+        phoneInput.value = '';
+
+        successMessage.style.display = 'block';
+
+        console.log('Псевдоформа отправлена без события submit');
+      }, 700);
+    });
+  </script>
+</body>
+</html>
