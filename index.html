@@ -82,6 +82,12 @@
       text-decoration: underline;
     }
   </style>
+
+  <script>
+    function dlpush() {
+      dataLayer.push({event: 'dataLayer_click'});
+    }
+  </script>
 </head>
 
 <body>
@@ -91,7 +97,7 @@
 
       <button id="btn">Кнопка</button>
 
-      <a class="forms-link" href="forms.html">
+      <a class="forms-link" href="forms.html" onclick="dlpush()">
         Перейти к примерам форм
       </a>
     </div>
