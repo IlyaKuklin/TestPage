@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Брауни с фундуком — ecommerce detail</title>
+  <link rel="stylesheet" href="product-detail.css" />
+</head>
+<body>
+  <main class="page">
+    <a class="back-link" href="catalog.html">← К списку товаров</a>
+
+    <section class="product-detail" data-product-id="sku-102" data-product-brand="Digit Bakery" data-product-variant="1 шт." data-product-list="Каталог demo-магазина" data-product-position="2">
+      <div class="product-image">🍫</div>
+      <div class="product-info">
+        <div class="product-category">Десерты</div>
+        <h1 class="product-title">Брауни с фундуком</h1>
+        <p class="product-desc">Плотный шоколадный десерт без лишней сложности. При открытии этой страницы в dataLayer отправляется событие detail.</p>
+        <div class="product-meta">
+          <span>Digit Bakery</span>
+          <span>1 шт.</span>
+        </div>
+        <div class="product-price">690 ₽</div>
+        <div class="qty-row">
+          <label for="qty-102-detail">Количество</label>
+          <input class="product-quantity" id="qty-102-detail" type="number" min="1" max="20" value="1" />
+        </div>
+        <button class="js-add-to-cart" type="button">Добавить в корзину</button>
+        <div class="cart-message js-cart-message" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="debug-panel" aria-label="dataLayer">
+      <h2>dataLayer</h2>
+      <div class="debug js-debug">dataLayer пока пуст</div>
+    </section>
+  </main>
+
+  <script src="product-detail.js"></script>
+</body>
+</html>

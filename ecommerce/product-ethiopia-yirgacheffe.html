@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Эфиопия Иргачефф — ecommerce detail</title>
+  <link rel="stylesheet" href="product-detail.css" />
+</head>
+<body>
+  <main class="page">
+    <a class="back-link" href="catalog.html">← К списку товаров</a>
+
+    <section class="product-detail" data-product-id="sku-101" data-product-brand="Digit Coffee" data-product-variant="250 г" data-product-list="Каталог demo-магазина" data-product-position="1">
+      <div class="product-image">☕</div>
+      <div class="product-info">
+        <div class="product-category">Кофе</div>
+        <h1 class="product-title">Эфиопия Иргачефф</h1>
+        <p class="product-desc">Светлая обжарка, цветочные ноты, цитрус. Детальная страница нужна для демонстрации ecommerce-события detail.</p>
+        <div class="product-meta">
+          <span>Digit Coffee</span>
+          <span>250 г</span>
+        </div>
+        <div class="product-price">1 490 ₽</div>
+        <div class="qty-row">
+          <label for="qty-101-detail">Количество</label>
+          <input class="product-quantity" id="qty-101-detail" type="number" min="1" max="20" value="1" />
+        </div>
+        <button class="js-add-to-cart" type="button">Добавить в корзину</button>
+        <div class="cart-message js-cart-message" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="debug-panel" aria-label="dataLayer">
+      <h2>dataLayer</h2>
+      <div class="debug js-debug">dataLayer пока пуст</div>
+    </section>
+  </main>
+
+  <script src="product-detail.js"></script>
+</body>
+</html>
