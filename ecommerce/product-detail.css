@@ -195,8 +195,8 @@ button:hover {
   padding: 14px;
   font: 13px/1.5 Consolas, monospace;
   white-space: pre-wrap;
-  min-height: 140px;
-  max-height: 420px;
+  min-height: 520px;
+  max-height: 760px;
   overflow: auto;
 }
 
