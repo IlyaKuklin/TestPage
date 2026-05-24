@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DOM scraping demo — ecommerce</title>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108992298', 'ym');
+
+      ym(108992298, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/108992298" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  <style>
+    :root {
+      --bg: #f6f4ff;
+      --card: #ffffff;
+      --text: #1f2430;
+      --muted: #6b7280;
+      --accent: #6b46ff;
+      --line: #e7e2ff;
+      --soft: #f1edff;
+      --success: #15803d;
+      --danger: #b91c1c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #e9e2ff 0, transparent 34%),
+        linear-gradient(180deg, #fbfaff 0%, var(--bg) 100%);
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 42px 20px 64px;
+    }
+
+    .hero {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, .82);
+      box-shadow: 0 18px 55px rgba(83, 64, 160, .12);
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      max-width: 780px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .product-card,
+    .panel,
+    .order-success {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 16px 40px rgba(83, 64, 160, .09);
+    }
+
+    .product-card { overflow: hidden; }
+
+    .product-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .product-image {
+      height: 150px;
+      background: linear-gradient(135deg, #ede8ff, #ffffff 55%, #e8fff3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+    }
+
+    .product-image .product-link {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-body { padding: 18px; }
+
+    .product-category {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+    }
+
+    .product-title {
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .product-title .product-link:hover { color: var(--accent); }
+
+    .product-desc {
+      min-height: 46px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      margin: 0 0 14px;
+    }
+
+    .product-price {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .qty-row {
+      display: grid;
+      grid-template-columns: 1fr 96px;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .qty-row label {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .product-quantity {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--text);
+      background: #fff;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .product-detail-link {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .product-detail-link:hover { text-decoration: underline; }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 16px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:hover { filter: brightness(.96); }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+
+    .panel {
+      padding: 20px;
+      position: sticky;
+      top: 18px;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .cart-empty {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 16px;
+    }
+
+    .cart-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .cart-item {
+      padding: 12px;
+      border-radius: 16px;
+      background: #faf9ff;
+      border: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    .cart-item strong { display: block; margin-bottom: 4px; }
+
+    .cart-item-meta {
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .remove-button {
+      width: auto;
+      margin-top: 10px;
+      border-radius: 12px;
+      background: #fee2e2;
+      color: var(--danger);
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .checkout { background: var(--success); }
+
+    .order-success {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      border-color: rgba(21, 128, 61, .22);
+      background: #f0fdf4;
+    }
+
+    .order-success.is-visible { display: block; }
+
+    .order-success h3 {
+      margin: 0 0 8px;
+      color: var(--success);
+      font-size: 18px;
+    }
+
+    .order-success p {
+      margin: 0 0 6px;
+      color: #166534;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .products { grid-template-columns: 1fr; }
+      .panel { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="badge">Учебный сайт · DOM scraping · ecommerce</div>
+      <h1>Демо-магазин для ручной передачи ecommerce</h1>
+      <p class="lead">
+        На этой странице данные о товаре специально лежат прямо в HTML. Скрипт ниже не получает их из CMS,
+        а «соскребает» из DOM: название, цену, категорию, id товара и выбранное количество. Это удобно для демонстрации,
+        но в боевых проектах надёжнее получать ecommerce-данные из CMS/backend или готового объекта с данными.
+      </p>
+    </section>
+
+    <div class="grid">
+      <section class="products" aria-label="Каталог">
+        <article class="product-card" data-product-id="sku-101" data-product-brand="Digit Coffee" data-product-variant="250 г" data-product-list="Каталог demo-магазина" data-product-position="1">
+          <div class="product-image">
+            <a class="product-link js-product-link" href="product-ethiopia-yirgacheffe.html" aria-label="Открыть товар Эфиопия Иргачефф">☕</a>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Кофе</div>
+            <h2 class="product-title">
+              <a class="product-link js-product-link" href="product-ethiopia-yirgacheffe.html">Эфиопия Иргачефф</a>
+            </h2>
+            <p class="product-desc">Светлая обжарка, цветочные ноты, цитрус.</p>
+            <div class="product-price">1 490 ₽</div>
+            <a class="product-detail-link js-product-link" href="product-ethiopia-yirgacheffe.html">Подробнее</a>
+            <div class="qty-row">
+              <label for="qty-101">Количество</label>
+              <input class="product-quantity" id="qty-101" type="number" min="1" max="20" value="1" />
+            </div>
+            <button class="js-add-to-cart">Добавить в корзину</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-product-id="sku-102" data-product-brand="Digit Bakery" data-product-variant="1 шт." data-product-list="Каталог demo-магазина" data-product-position="2">
+          <div class="product-image">
+            <a class="product-link js-product-link" href="product-brownie-hazelnut.html" aria-label="Открыть товар Брауни с фундуком">🍫</a>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Десерты</div>
+            <h2 class="product-title">
+              <a class="product-link js-product-link" href="product-brownie-hazelnut.html">Брауни с фундуком</a>
+            </h2>
+            <p class="product-desc">Плотный шоколадный десерт без лишней сложности.</p>
+            <div class="product-price">690 ₽</div>
+            <a class="product-detail-link js-product-link" href="product-brownie-hazelnut.html">Подробнее</a>
+            <div class="qty-row">
+              <label for="qty-102">Количество</label>
+              <input class="product-quantity" id="qty-102" type="number" min="1" max="20" value="1" />
+            </div>
+            <button class="js-add-to-cart">Добавить в корзину</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-product-id="sku-103" data-product-brand="Digit Tea" data-product-variant="100 г" data-product-list="Каталог demo-магазина" data-product-position="3">
+          <div class="product-image">
+            <a class="product-link js-product-link" href="product-milk-oolong.html" aria-label="Открыть товар Улун молочный">🫖</a>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Чай</div>
+            <h2 class="product-title">
+              <a class="product-link js-product-link" href="product-milk-oolong.html">Улун молочный</a>
+            </h2>
+            <p class="product-desc">Мягкий вкус, сливочный аромат, спокойный профиль.</p>
+            <div class="product-price">1 190 ₽</div>
+            <a class="product-detail-link js-product-link" href="product-milk-oolong.html">Подробнее</a>
+            <div class="qty-row">
+              <label for="qty-103">Количество</label>
+              <input class="product-quantity" id="qty-103" type="number" min="1" max="20" value="1" />
+            </div>
+            <button class="js-add-to-cart">Добавить в корзину</button>
+          </div>
+        </article>
+      </section>
+
+      <aside class="panel" aria-label="Корзина">
+        <h2>Корзина</h2>
+        <p class="cart-empty">Пока пусто. Добавьте товар, чтобы увидеть его в корзине.</p>
+        <div class="cart-list"></div>
+        <div class="total">
+          <span>Итого</span>
+          <span class="js-total">0 ₽</span>
+        </div>
+        <button class="checkout js-checkout" disabled>Оформить тестовый заказ</button>
+
+        <section class="order-success js-order-success" aria-live="polite">
+          <h3>Заказ успешно оформлен</h3>
+          <p>Номер заказа: <strong class="js-order-id">—</strong></p>
+          <p>Сумма заказа: <strong class="js-order-total">0 ₽</strong></p>
+          <p>Корзина очищена после оформления.</p>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    // Учебный пример магазина без отправки ecommerce-данных.
+
+    const CART_STORAGE_KEY = 'digitDemoEcommerceTestCart';
+    const cart = loadCart();
+    const cartList = document.querySelector('.cart-list');
+    const cartEmpty = document.querySelector('.cart-empty');
+    const totalNode = document.querySelector('.js-total');
+    const checkoutButton = document.querySelector('.js-checkout');
+    const orderSuccess = document.querySelector('.js-order-success');
+    const orderIdNode = document.querySelector('.js-order-id');
+    const orderTotalNode = document.querySelector('.js-order-total');
+
+    function parsePrice(text) {
+      return Number(String(text).replace(/[^0-9.,]/g, '').replace(',', '.')) || 0;
+    }
+
+    function parseQuantity(value) {
+      const quantity = Number(value);
+      if (!Number.isFinite(quantity) || quantity < 1) return 1;
+      return Math.floor(quantity);
+    }
+
+    function formatPrice(value) {
+      return new Intl.NumberFormat('ru-RU').format(value) + ' ₽';
+    }
+
+    function loadCart() {
+      try {
+        const storedCart = localStorage.getItem(CART_STORAGE_KEY);
+        return storedCart ? JSON.parse(storedCart) : [];
+      } catch (error) {
+        console.warn('Не удалось прочитать корзину из localStorage:', error);
+        return [];
+      }
+    }
+
+    function saveCart() {
+      try {
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+      } catch (error) {
+        console.warn('Не удалось сохранить корзину в localStorage:', error);
+      }
+    }
+
+    function clearCartStorage() {
+      try {
+        localStorage.removeItem(CART_STORAGE_KEY);
+      } catch (error) {
+        console.warn('Не удалось очистить корзину в localStorage:', error);
+      }
+    }
+
+    function getProductFromCard(card) {
+      return {
+        id: card.dataset.productId,
+        name: card.querySelector('.product-title').textContent.trim(),
+        brand: card.dataset.productBrand,
+        category: card.querySelector('.product-category').textContent.trim(),
+        variant: card.dataset.productVariant,
+        price: parsePrice(card.querySelector('.product-price').textContent),
+        quantity: parseQuantity(card.querySelector('.product-quantity').value),
+        list: card.dataset.productList,
+        position: Number(card.dataset.productPosition)
+      };
+    }
+
+    function getProductFromDom(button) {
+      return getProductFromCard(button.closest('.product-card'));
+    }
+
+    function getCartRevenue() {
+      return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    }
+
+    function addToCart(product) {
+      const existing = cart.find(item => item.id === product.id);
+
+      if (existing) {
+        existing.quantity += product.quantity;
+      } else {
+        cart.push({ ...product });
+      }
+
+      saveCart();
+      orderSuccess.classList.remove('is-visible');
+      renderCart();
+    }
+
+    function removeFromCart(productId) {
+      const index = cart.findIndex(item => item.id === productId);
+      if (index === -1) return;
+
+      const removedProduct = cart[index];
+      cart.splice(index, 1);
+
+      saveCart();
+      orderSuccess.classList.remove('is-visible');
+      renderCart();
+    }
+
+    function renderCart() {
+      cartList.innerHTML = '';
+      cartEmpty.style.display = cart.length ? 'none' : 'block';
+      checkoutButton.disabled = !cart.length;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = '<strong>' + item.name + '</strong>' +
+          '<div class="cart-item-meta">' +
+            '<span>' + item.quantity + ' × ' + formatPrice(item.price) + '</span>' +
+            '<span>' + formatPrice(itemTotal) + '</span>' +
+          '</div>' +
+          '<button class="remove-button js-remove-from-cart" type="button" data-product-id="' + item.id + '">Удалить</button>';
+        cartList.appendChild(div);
+      });
+
+      totalNode.textContent = formatPrice(getCartRevenue());
+    }
+
+    function showOrderSuccess(orderId, revenue) {
+      orderIdNode.textContent = orderId;
+      orderTotalNode.textContent = formatPrice(revenue);
+      orderSuccess.classList.add('is-visible');
+    }
+
+    document.querySelectorAll('.js-add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const product = getProductFromDom(button);
+        addToCart(product);
+      });
+    });
+
+    cartList.addEventListener('click', event => {
+      const removeButton = event.target.closest('.js-remove-from-cart');
+      if (!removeButton) return;
+
+      removeFromCart(removeButton.dataset.productId);
+    });
+
+    checkoutButton.addEventListener('click', () => {
+      if (!cart.length) return;
+
+      const orderId = 'demo-order-' + Date.now();
+      const revenue = getCartRevenue();
+
+      cart.length = 0;
+      clearCartStorage();
+      renderCart();
+      showOrderSuccess(orderId, revenue);
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>
