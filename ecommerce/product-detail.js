@@ -85,9 +85,6 @@ function pushEcommerceDetail(product) {
     ecommerce: {
       currencyCode: 'RUB',
       detail: {
-        actionField: {
-          list: product.list
-        },
         products: [buildProductForEcommerce(product, false)]
       }
     }

@@ -327,23 +327,6 @@
       font-size: 22px;
     }
 
-    .note {
-      margin-top: 24px;
-      padding: 18px 20px;
-      border-radius: 22px;
-      background: #fff;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .note code {
-      background: var(--soft);
-      color: var(--accent);
-      padding: 2px 6px;
-      border-radius: 8px;
-    }
-
     @media (max-width: 900px) {
       .grid { grid-template-columns: 1fr; }
       .products { grid-template-columns: 1fr; }
@@ -448,14 +431,6 @@
     <section class="debug-panel" aria-label="dataLayer">
       <h2>dataLayer</h2>
       <div class="debug js-debug">dataLayer пока пуст</div>
-    </section>
-
-    <section class="note">
-      Для проверки откройте DevTools → Console и выполните <code>window.dataLayer</code>.
-      При открытии каталога скрипт отправляет <code>impressions</code>, при клике по товару —
-      <code>click</code>, на карточках товаров — <code>detail</code>, при добавлении в корзину —
-      <code>add</code>, при удалении — <code>remove</code>, а при оформлении — <code>purchase</code>.
-      Количество товара тоже берётся из DOM — из поля <code>.product-quantity</code>.
     </section>
   </main>
 
@@ -575,9 +550,6 @@
         ecommerce: {
           currencyCode: 'RUB',
           click: {
-            actionField: {
-              list: product.list
-            },
             products: [buildProductForEcommerce(product, false)]
           }
         }
